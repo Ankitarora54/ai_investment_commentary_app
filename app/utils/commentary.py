@@ -2,7 +2,7 @@ import pandas as pd
 from openai import OpenAI
 import os
 
-client = OpenAI(api_key="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")
+client = OpenAI(api_key=os.getenv("OPENAI_API_KEY"))
 
 def generate_commentary(df: pd.DataFrame):
 
