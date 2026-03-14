@@ -1,0 +1,12 @@
+stock,sector,return
+AAPL,Technology,5
+MSFT,Technology,4
+JPM,Financials,-2
+XOM,Energy,3
+fff,Technology,0.01
+ddd,Technology,-0.03
+ccc,Technology,-35.2
+sss,Technology,-0.0001
+ii,Manufacturing,10
+gg,Manufacturing,-15
+kkk,Manufacturing,-25
