@@ -1,11 +1,7 @@
 import pandas as pd
-from openai import OpenAI
-import os
 
-client = OpenAI(api_key=os.getenv("OPENAI_API_KEY"))
-
-def generate_commentary(df: pd.DataFrame):
-
+def generate_commentary(df: pd.DataFrame,client: OpenAI):
+    data_summary = df.head().to_string()
     # Basic summaries
     avg_return = df['return'].mean()
     top_performer = df.loc[df['return'].idxmax()]
