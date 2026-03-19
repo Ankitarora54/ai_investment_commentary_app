@@ -27,3 +27,10 @@ def compare_with_benchmark(portfolio_return, benchmark_return=2.0):
         "alpha": alpha,
         "outperformance": alpha > 0
     }
+
+def compare_portfolios(df1, df2):
+    return {
+        "portfolio_1_return": df1['return'].mean(),
+        "portfolio_2_return": df2['return'].mean(),
+        "difference": df1['return'].mean() - df2['return'].mean()
+    }

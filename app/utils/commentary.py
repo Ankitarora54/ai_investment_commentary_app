@@ -1,27 +1,80 @@
 import pandas as pd
+from utils.personalization import get_client_prompt_modifier
 
-def generate_commentary(metrics, benchmark_data, period="Monthly", client= None):
+def generate_commentary(metrics, benchmark_data, period="Monthly",client_type="Retail",market_context="", client= None):
+    
+    style_modifier = get_client_prompt_modifier(client_type)
 
     prompt = f"""
-    You are a senior investment analyst writing {period} portfolio commentary.
+    You are a senior investment analyst preparing client commentary.
 
-    Portfolio Metrics:
-    - Average Return: {metrics['avg_return']:.2f}%
-    - Total Return: {metrics['total_return']:.2f}%
-    - Top Performer: {metrics['top_stock']} ({metrics['top_return']}%)
-    - Worst Performer: {metrics['worst_stock']} ({metrics['worst_return']}%)
+    {style_modifier}
+
+    Market Environment:
+    {market_context}
+
+    Portfolio Highlights:
+    - Avg Return: {metrics['avg_return']:.2f}%
+    - Top Stock: {metrics['top_stock']}
+    - Worst Stock: {metrics['worst_stock']}
     - Sector Performance: {metrics['sector_performance']}
 
-    Benchmark:
+    Benchmark Comparison:
     - Benchmark Return: {benchmark_data['benchmark']}%
     - Alpha: {benchmark_data['alpha']:.2f}%
 
     Instructions:
-    - Professional institutional tone
-    - Mention outperformance/underperformance
-    - Highlight sectors
+    - Explain performance drivers
+    - Reference market conditions
+    - Adjust tone based on client type
     - Keep concise (6–8 lines)
-    - Add forward-looking insight
+    - Include forward outlook
+    """
+
+    response = client.chat.completions.create(
+        model="gpt-4o-mini",
+        messages=[
+            {"role": "system", "content": "You are a CFA-level investment analyst."},
+            {"role": "user", "content": prompt}
+        ],
+        temperature=0.7
+    )
+
+    return response.choices[0].message.content
+
+
+def generate_comparison_commentary(p1_metrics, p2_metrics, comparison, client_type, market_context, period, client= None):
+
+    style_modifier = get_client_prompt_modifier(client_type)
+
+    prompt = f"""
+    You are a senior investment analyst preparing a comparative portfolio commentary.
+
+    {style_modifier}
+
+    Market Environment:
+    {market_context}
+
+    Portfolio 1:
+    - Avg Return: {p1_metrics['avg_return']:.2f}%
+    - Top Stock: {p1_metrics['top_stock']}
+    - Sector Performance: {p1_metrics['sector_performance']}
+
+    Portfolio 2:
+    - Avg Return: {p2_metrics['avg_return']:.2f}%
+    - Top Stock: {p2_metrics['top_stock']}
+    - Sector Performance: {p2_metrics['sector_performance']}
+
+    Comparison:
+    - Return Difference: {comparison['difference']:.2f}%
+
+    Instructions:
+    - Compare performance drivers
+    - Highlight sector allocation differences
+    - Explain which portfolio outperformed and why
+    - Reference market conditions
+    - Keep concise (6–8 lines)
+    - Include forward-looking insight
 
     Output:
     """
@@ -36,6 +89,29 @@ def generate_commentary(metrics, benchmark_data, period="Monthly", client= None)
     )
 
     return response.choices[0].message.content
+
+
+# def generate_commentary(metrics, benchmark_data, period, client_type, market_context):
+
+#     style_modifier = get_client_prompt_modifier(client_type)
+
+#     prompt = f"""
+#     You are a senior investment analyst.
+
+#     {style_modifier}
+
+#     Market Context:
+#     {market_context}
+
+#     Portfolio Metrics:
+#     {metrics}
+
+#     Benchmark:
+#     {benchmark_data}
+
+#     Generate {period} commentary.
+#     """
+
 
 
 # def generate_commentary(df: pd.DataFrame,client: OpenAI):
