@@ -1,11 +1,11 @@
 import streamlit as st
 import pandas as pd
 from utils.commentary import generate_commentary
-from dotenv import load_dotenv
+#from dotenv import load_dotenv
 from openai import OpenAI
 import os
 
-load_dotenv()
+#load_dotenv()
 client = OpenAI(api_key=os.getenv("OPENAI_API_KEY"))
 
 st.title("AI Investment Commentary Generator")
