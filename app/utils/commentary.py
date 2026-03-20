@@ -27,7 +27,8 @@ def generate_commentary(metrics, benchmark_data, period="Monthly",client_type="R
     - Explain performance drivers
     - Reference market conditions
     - Adjust tone based on client type
-    - Keep concise (6–8 lines)
+    - Provide 5–7 bullet points
+    - Keep concise (8–10 lines)
     - Include forward outlook
     """
 
@@ -73,7 +74,9 @@ def generate_comparison_commentary(p1_metrics, p2_metrics, comparison, client_ty
     - Highlight sector allocation differences
     - Explain which portfolio outperformed and why
     - Reference market conditions
-    - Keep concise (6–8 lines)
+    - Provide 5–7 bullet points
+    - Each bullet should be concise (1 line)
+    - Keep concise (8–10 lines)
     - Include forward-looking insight
 
     Output:
