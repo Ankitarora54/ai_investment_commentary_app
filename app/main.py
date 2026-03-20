@@ -175,9 +175,9 @@ if mode == "Single Portfolio Summary":
             
             #Generate Commentary
             with st.spinner("Generating AI commentary..."):
-                # commentary = generate_commentary(metrics,benchmark_data,period
-                #                             ,client_type,market_context="",client = client)
-                commentary="AA"
+                commentary = generate_commentary(metrics,benchmark_data,period
+                                            ,client_type,market_context="",client = client)
+                #commentary="AA"
             st.subheader("Portfolio Insights & Market Outlook")
             st.markdown(f'<div class="commentary-box">{commentary}</div>', unsafe_allow_html=True)
             
